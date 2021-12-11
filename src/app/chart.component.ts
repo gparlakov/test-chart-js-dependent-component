@@ -21,8 +21,8 @@ const ChartBuilderToken = new InjectionToken<typeof chartBuilder>(
 })
 export class ChartComponent {
   @ViewChild('canvas')
-  canvas: ElementRef;
-  chart: Chart;
+  canvas: ElementRef | undefined;
+  chart: Chart | undefined;
 
   constructor(
     private router: Router,
@@ -31,7 +31,7 @@ export class ChartComponent {
 
   ngAfterViewInit() {
     const data = [1, 2, 3, 4, 5];
-    this.chart = this.buildChart(this.canvas.nativeElement, {
+    this.chart = this.buildChart(this.canvas?.nativeElement, {
       type: 'line',
       data: {
         datasets: [{ data, label: '1' }],
@@ -40,7 +40,7 @@ export class ChartComponent {
       options: {
         onClick: (_, [element]) => {
           if (element != null) {
-            const isVisible = this.chart.getDataVisibility(element.index);
+            const isVisible = this.chart?.getDataVisibility(element.index);
             if (isVisible) {
               this.router.navigate([data[element.index]]);
             }

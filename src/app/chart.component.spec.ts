@@ -23,7 +23,7 @@ describe('test my chart', () => {
     const r = mockRouter();
     // arrange the onclick prerequisites
     const ch = jasmine.createSpy('chart builder');
-    let onClickCallback;
+    let onClickCallback: Function = () => {};
     ch.and.callFake((i, o) => {
       onClickCallback = o.options.onClick;
       return {
@@ -48,7 +48,7 @@ describe('test my chart', () => {
     const r = mockRouter();
     // arrange the onclick prerequisites
     const ch = jasmine.createSpy('chart builder');
-    let onClickCallback;
+    let onClickCallback: Function = () => {};
     ch.and.callFake((i, o) => {
       onClickCallback = o.options.onClick;
       return {
