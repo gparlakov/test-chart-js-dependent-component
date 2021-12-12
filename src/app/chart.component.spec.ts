@@ -18,7 +18,7 @@ describe('test my chart', () => {
     expect(c.chart).toBeDefined();
   });
 
-  it('when clicked on the second point should navigate to show the selected point if it is visible', () => {
+  it('when clicked on the second point should navigate to show the selected point', () => {
     // arrange
     const r = mockRouter();
     // arrange the onclick prerequisites
@@ -26,12 +26,7 @@ describe('test my chart', () => {
     let onClickCallback: Function = () => {};
     ch.and.callFake((i, o) => {
       onClickCallback = o.options.onClick;
-      return {
-        // mock the isVisible method
-        getDataVisibility: jasmine
-          .createSpy('isVisibleMockMethod')
-          .and.returnValue(true),
-      };
+      return {}; // <-- mock needed chart methods and props here
     });
 
     const c = new ChartComponent(r, ch);
@@ -43,30 +38,6 @@ describe('test my chart', () => {
     expect(r.navigate).toHaveBeenCalledWith([2]);
   });
 
-  it('when clicked on the second point should NOT navigate to show the selected point if it is NOT visible', () => {
-    // arrange
-    const r = mockRouter();
-    // arrange the onclick prerequisites
-    const ch = jasmine.createSpy('chart builder');
-    let onClickCallback: Function = () => {};
-    ch.and.callFake((i, o) => {
-      onClickCallback = o.options.onClick;
-      return {
-        // mock the isVisible method
-        getDataVisibility: jasmine
-          .createSpy('isVisibleMockMethod')
-          .and.returnValue(false),
-      };
-    });
-
-    const c = new ChartComponent(r, ch);
-    c.canvas = new ElementRef(document.createElement('canvas'));
-    c.ngAfterViewInit();
-    // act
-    onClickCallback(null, [{ index: 1 }]);
-    // assert
-    expect(r.navigate).not.toHaveBeenCalledWith([2]);
-  });
 });
 
 function mockRouter(): Router {
