@@ -8,30 +8,19 @@ import {
 import { Router } from '@angular/router';
 import { Chart, ChartConfiguration, ChartItem } from 'chart.js';
 
-export function chartBuilder(item: ChartItem, options: ChartConfiguration) {
-  return new Chart(item, options);
-}
-const ChartBuilderToken = new InjectionToken<typeof chartBuilder>(
-  'The Chart.js instance builder'
-);
-
 @Component({
   template: `<canvas #canvas width="200" height="200"></canvas>`,
-  providers: [{ provide: ChartBuilderToken, useValue: chartBuilder }],
 })
 export class ChartComponent {
   @ViewChild('canvas')
   canvas: ElementRef | undefined;
   chart: Chart | undefined;
 
-  constructor(
-    private router: Router,
-    @Inject(ChartBuilderToken) private buildChart: typeof chartBuilder
-  ) {}
+  constructor(private router: Router) {}
 
   ngAfterViewInit() {
     const data = [1, 2, 3, 4, 5];
-    this.chart = this.buildChart(this.canvas?.nativeElement, {
+    this.chart = new Chart(this.canvas?.nativeElement, {
       type: 'line',
       data: {
         datasets: [{ data, label: '1' }],

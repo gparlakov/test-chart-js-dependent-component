@@ -7,10 +7,7 @@ describe('test my chart', () => {
   it('should draw the chart on ngAfterViewInit', () => {
     // arrange
     const r = mockRouter();
-    const c = new ChartComponent(
-      r,
-      jasmine.createSpy('chart builder').and.returnValue('the chart')
-    );
+    const c = new ChartComponent(r);
     c.canvas = new ElementRef(document.createElement('canvas'));
     // act
     c.ngAfterViewInit();
@@ -21,23 +18,18 @@ describe('test my chart', () => {
   it('when clicked on the second point should navigate to show the selected point', () => {
     // arrange
     const r = mockRouter();
-    // arrange the onclick prerequisites
-    const ch = jasmine.createSpy('chart builder');
-    let onClickCallback: Function = () => {};
-    ch.and.callFake((i, o) => {
-      onClickCallback = o.options.onClick;
-      return {}; // <-- mock needed chart methods and props here
-    });
-
-    const c = new ChartComponent(r, ch);
+    const c = new ChartComponent(r);
     c.canvas = new ElementRef(document.createElement('canvas'));
     c.ngAfterViewInit();
     // act
-    onClickCallback(null, [{ index: 1 }]);
+
+    // -----
+    // ????? how to test this
+    // -----
+
     // assert
     expect(r.navigate).toHaveBeenCalledWith([2]);
   });
-
 });
 
 function mockRouter(): Router {
