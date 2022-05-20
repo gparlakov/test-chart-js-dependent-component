@@ -10,6 +10,6 @@ export class InnerComponent {
   selected$: Observable<string>;
 
   constructor(route: ActivatedRoute) {
-    this.selected$ = route.paramMap.pipe(map((r) => r.get('id')));
+    this.selected$ = route.paramMap.pipe(map((r) => r.get('id')!));
   }
 }
