@@ -40,7 +40,10 @@ export class ChartComponent {
       options: {
         onClick: (_, [element]) => {
           if (element != null) {
-            this.router.navigate([data[element.index]]);
+            const isVisible = this.chart?.getDataVisibility(element.index);
+            if (isVisible) {
+              this.router.navigate([data[element.index]]);
+            }
           }
         },
       },

@@ -70,7 +70,7 @@ export function setup() {
       onClickCallback(null, [{ index }]);
     },
     withChartGetDataVisibilityReturning(b: boolean) {
-      chart.getDataVisibility.and.return(b);
+      chart.getDataVisibility.and.returnValue(b);
       return builder;
     },
   };
