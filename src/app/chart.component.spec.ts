@@ -15,7 +15,7 @@ describe('test my chart', () => {
 
   it('when clicked on the second point should navigate to show the selected point if it is visible', () => {
     // arrange
-    const { build, callOnClickWith, router } = setup();
+    const { build, callOnClickWith, router } = setup().withChartGetDataVisibilityReturning(true);
     const c = build();
     c.ngAfterViewInit();
     // act
